@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-demo Vue实例</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <!--当一个 Vue 实例被创建时，它将 data 对象中的所有的 property 加入到 Vue 的响应式系统中。
+    当这些 property 的值发生改变时，视图将会产生“响应”，即匹配更新为新的值。-->
+    <div id="app">
+        {{ a }}
+    </div>
+
+    <script>
+        // 我们的数据对象
+        var data1 = { a: 1 }
+
+        // 该对象被加入到一个 Vue 实例中
+        var vm = new Vue({
+            el: '#app',
+            data: data1
+        })
+
+        // 获得这个实例上的 property
+        // 返回源数据中对应的字段
+        console.log(vm.a);console.log(data1.a);console.log(vm.a == data1.a); // => true
+
+        // 设置 property 也会影响到原始数据
+        vm.a = 2;console.log(data1.a) // => 2
+
+        // ……反之亦然
+        data1.a = 3;console.log(vm.a) // => 3
+
+        /*只有当实例被创建时就已经存在于 data 中的 property 才是响应式的*/
+        // vm.b = 'hi';console.log(data1.b);console.log(vm.b);
+        /*对 b 的改动将不会触发任何视图的更新。如果你知道你会在晚些时候需要一个 property，但是一开始它为空或不存在，那么你仅需要设置一些初始值*/
+    </script>
+</body>
+</html>

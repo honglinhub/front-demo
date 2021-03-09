@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-demo Vue实例</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{ a }}
+    </div>
+
+    <script>
+        /*除了数据 property，Vue 实例还暴露了一些有用的实例 property 与方法。它们都有前缀 $，以便与用户定义的 property 区分开来*/
+
+        var data = { a: 1 }
+        var vm = new Vue({
+            el: '#app',
+            data: data
+        })
+
+        console.log(vm.$data) === data // => true
+        console.log(vm.$data === data)
+        console.log(vm.$data.a)
+        vm.$el === document.getElementById('app') // => true
+
+        // $watch 是一个实例方法
+        vm.$watch('a', function (newValue, oldValue) {
+            // 这个回调将在 `vm.a` 改变后调用
+        })
+    </script>
+</body>
+</html>

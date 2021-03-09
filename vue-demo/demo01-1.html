@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-demo 声明式渲染</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{ message }}
+        <p/>
+        {{ message1 }}
+
+        <p/>
+        <!--绑定元素 attribute-->
+        <span v-bind:title="message2">
+            鼠标悬停几秒钟查看此处动态绑定的提示信息！
+        </span>
+
+        <!--这个例子演示了我们不仅可以把数据绑定到 DOM 文本或 attribute，还可以绑定到 DOM 结构。-->
+        <p v-if="seen">现在你看到我了</p>
+
+        <!--app.todos.push({ text: '新项目' })-->
+        <ol>
+            <li v-for="todo in todos">
+                {{ todo.text }}
+            </li>
+        </ol>
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello Vue!',
+                message1: 'Hello World!',
+                message2: '页面加载于 ' + new Date().toLocaleString(),
+                seen: true,
+                todos: [
+                    { text: '学习 JavaScript' },
+                    { text: '学习 Vue' },
+                    { text: '整个牛项目' }
+                ]
+            }
+        });
+    </script>
+</body>
+</html>
