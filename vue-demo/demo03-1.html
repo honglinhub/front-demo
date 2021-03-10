@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-demo 生命周期</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{ msg }}
+    </div>
+
+    <script>
+        /*https://cn.vuejs.org/v2/api/#beforeCreate*/
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: "hi vue"
+            },
+            beforeCreate: function () {
+                console.log('beforeCreate')
+            },
+            created: function () {
+                console.log("created")
+            },
+            beforeMount: function () {
+                console.log("beforeMount")
+            },
+            mounted: function () {
+                console.log("mounted")
+            },
+            beforeUpdate: function() {
+                console.log("beforeUpdate")
+            },
+            updated: function () {
+                console.log("updated")
+            }
+        })
+        setTimeout(function () {
+            vm.$data.msg = "changed ......"
+        }, 1000)
+        setInterval(function () {
+            // vm.msg = "changed ..." + Date();
+            console.log(Date())
+            vm.$data.msg = "changed ......"
+        }, 3000)
+    </script>
+</body>
+</html>

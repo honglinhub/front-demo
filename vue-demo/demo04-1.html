@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-demo 模板语法-插值</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <span>Message: {{ msg }}</span>
+        <br/>
+        <span v-once>这个将不会改变: {{ msg }}</span>
+        <br/>
+
+        <p>Using mustaches: {{ rawHtml }}</p>
+        <p>Using v-html directive: <span v-html="rawHtml"></span></p> <!--<p><span><span></span></span></p>-->
+        <p v-html="rawHtml"></p> <!--<p><span></span></p>-->
+
+        <br/>
+        <div v-bind:id="dynamicId">test</div>
+        <div v-bind:class="colorVar">test</div>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: "hi vue",
+                rawHtml: "<span style='color: red'>This should be red.</span>",
+                dynamicId: 'app1', // document.getElementById('app')
+                colorVar: 'red'
+            }
+        })
+        vm.$data.msg = "changed......"
+    </script>
+    <style>
+        .red {color: red;}
+        .blue {
+            color: blue;
+            font-size: 100px;
+        }
+    </style>
+</body>
+</html>
