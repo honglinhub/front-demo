@@ -7,7 +7,11 @@
 </head>
 <body>
     <div id="app">
-
+        <!--
+        !!!
+        watch更倾向于一个变量
+        computed更倾向于依赖的一个或多个变量
+        -->
     </div>
     <script>
         var vm = new Vue({
@@ -16,22 +20,7 @@
                 message: "Hello"
             },
             computed: {
-                // 计算属性的 getter
-                reversedMessageC: function () {
-                    // `this` 指向 vm 实例
-                    console.log("have cached")
-                    return this.message.split('').reverse().join('')
-                },
-                now: function () {
-                    return Date.now
-                }
-            },
-            methods: {
-                reversedMessageM: function() {
-                    /*【没有缓存!!!】*/
-                    console.log("not have cached")
-                    return this.message.split('').reverse().join('')
-                }
+
             }
         })
     </script>
