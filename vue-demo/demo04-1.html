@@ -17,8 +17,17 @@
         <p v-html="rawHtml"></p> <!--<p><span></span></p>-->
 
         <br/>
+        <!--v-bind:attribute="var"-->
         <div v-bind:id="dynamicId">test</div>
         <div v-bind:class="colorVar">test</div>
+        <button v-bind:disabled="isButtonDisabled">Button</button>
+
+        <!--使用 JavaScript 表达式-->
+        <p>{{ number + 1 }}</p>
+        <p>{{ ok ? 'YES' : 'NO' }}</p>
+        <p>{{ message.split('').reverse().join('') }}</p>
+        <div v-bind:id="'list-' + id"></div>
+        <!--有个限制就是，每个绑定都只能包含单个表达式-->
     </div>
 
     <script>
@@ -27,8 +36,13 @@
             data: {
                 msg: "hi vue",
                 rawHtml: "<span style='color: red'>This should be red.</span>",
-                dynamicId: 'app1', // document.getElementById('app')
-                colorVar: 'red'
+                dynamicId: 'app1', // document.getElementById('app1')
+                colorVar: 'blue', // vm.$data.colorVar = 'red'
+                isButtonDisabled: false, // vm.isButtonDisabled = true
+                number: 10,
+                ok: true,
+                message: "vue",
+                id: 1
             }
         })
         vm.$data.msg = "changed......"

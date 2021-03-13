@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-demo 模板语法-指令</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!--指令 (Directives) 是带有 v- 前缀的特殊 attribute。
+        指令 attribute 的值预期是单个 JavaScript 表达式 (v-for 是例外情况，稍后我们再讨论)。
+        指令的职责是，当表达式的值改变时，将其产生的连带影响，响应式地作用于 DOM-->
+        <p v-if="seen">现在你看到我了</p>
+
+        <!--一些指令能够接收一个“参数”，在指令名称之后以冒号表示。例如，v-bind 指令可以用于响应式地更新 HTML attribut-->
+        <a v-bind:href="url">...</a>
+        <p v-on:click="doSomething">...</p>
+
+        <p><a v-bind:[attributeName]="url"> ... </a></p>  <!--动态参数约束： 小写 无空格或引号-->
+        <p><a v-on:[eventname]="doSomething"> ... </a></p>
+
+        <!--修饰符 (modifier) 是以半角句号 . 指明的特殊后缀，用于指出一个指令应该以特殊方式绑定。-->
+        <div @click="click1">
+            <div @click.stop="click2">
+                click me
+            </div>
+        </div>
+        <!--@[event] 可以通过动态传参修改事件-->
+        <p><a href="www.baidu.com" @click.prevent="func3">baidu</a></p>
+
+        <!--缩写-->
+
+        <!--v-bind-->
+        <!-- 完整语法 -->
+        <a v-bind:href="url">...</a>
+        <!-- 缩写 -->
+        <a :href="url">...</a>
+        <!-- 动态参数的缩写 (2.6.0+) -->
+        <a :[key]="url"> ... </a>
+
+        </br>
+        <!--v-on-->
+        <!-- 完整语法 -->
+        <a v-on:click="doSomething">...</a>
+        <!-- 缩写 -->
+        <a @click="doSomething">...</a>
+        <!-- 动态参数的缩写 (2.6.0+) -->
+        <a @[event]="doSomething"> ... </a>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                seen: true,
+                url: "https://cn.vuejs.org/v2/guide/syntax.html#%E6%8C%87%E4%BB%A4",
+                /*attributeName: "href",*/
+                attributename: "href",
+                eventname: "click",
+                key: "href",
+                event: "click"
+            },
+            beforeCreate: function () {
+                console.log('beforeCreate')
+            },
+            methods: {
+                doSomething: function () {
+                    console.log("...")
+                },
+                click1: function() {
+                    console.log("click1......")
+                },
+                click2() {
+                    console.log("click2......")
+                },
+                func3() {
+                    alert('阻止a标签原先点击跳转的默认行为。')
+                }
+            }
+        })
+    </script>
+</body>
+</html>
