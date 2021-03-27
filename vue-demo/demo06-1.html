@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-demo Class 与 Style 绑定</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!--绑定 HTML Class-->
+        <div v-bind:class="{ active: isActive }">
+            vue
+        </div>
+
+        <!-- v-bind:class 指令也可以与普通的 class attribute 共存 -->
+        <div class="static" v-bind:class="{ active: isActive, 'text-danger': hasError }">
+            <!--vm.hasError = 1-->
+            vue
+        </div>
+
+        <!--对象语法-->
+        <!--绑定的数据对象不必内联定义在模板里：-->
+        <div v-bind:class="classObject">
+            vue
+        </div>
+
+        <!--我们也可以在这里绑定一个返回【对象】的计算属性。这是一个常用且强大的模式：-->
+        <div v-bind:class="classObject1">
+            vue
+        </div>
+
+        <!--数组语法-->
+        <!--我们可以把一个数组传给 v-bind:class，以应用一个 class 列表：-->
+        <!--对象就是样式是否为truthy, 数组就是直接给样式-->
+        <div v-bind:class="[activeClass, errorClass]"> <!-- ==> <div class="active text-danger">vue</div>-->
+            vue
+        </div>
+
+        <!--如果你也想根据条件切换列表中的 class，可以用三元表达式：-->
+        <div v-bind:class="[isActive ? activeClass : '', errorClass]">
+            vue
+        </div>
+
+        <!--当有多个条件 class 时这样写有些繁琐。所以在数组语法中也可以使用对象语法：-->
+        <div v-bind:class="[{ active: isActive }, errorClass]">
+            vue
+        </div>
+
+        <!--用在组件上-->
+        <!--当在一个自定义组件上使用 class property 时，这些 class 将被添加到该组件的根元素上面。这个元素上已经存在的 class 不会被覆盖。-->
+        <my-component class="baz boo"></my-component> <!-- ==> <p class="foo bar baz boo">Hi</p>-->
+
+        <!--对于带数据绑定 class 也同样适用：-->
+        <my-component v-bind:class="{ active: isActive }"></my-component> <!-- ==> <p class="foo bar active">Hi</p>-->
+
+        <!--绑定内联样式-->
+        <!--对象语法-->
+        <!--v-bind:style 的对象语法十分直观——看着非常像 CSS，但其实是一个 JavaScript 对象。
+        CSS property 名可以用驼峰式 (camelCase) 或短横线分隔 (kebab-case，【记得用引号括起来】) 来命名：-->
+        <div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">
+            vue
+        </div>
+        <div v-bind:style="{ color: activeColor, 'font-size': fontSize + 'px' }">
+            vue
+        </div>
+        <!--三元表达式-->
+        <div v-bind:style="{ color: isRed? activeColor : 'orange', fontSize: fontSize + 'px' }">
+            vue
+        </div>
+
+        <!--直接绑定到一个样式对象通常更好，这会让模板更清晰：-->
+        <div v-bind:style="styleObject">
+            vue
+            <!--同样的，对象语法常常结合返回对象的计算属性使用。-->
+        </div>
+
+        <!--数组语法-->
+        <div v-bind:style="[baseStyles, overridingStyles]">
+            vue
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+    <script>
+        Vue.component('my-component', {
+            template: '<p class="foo bar">Hi</p>'
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                isActive: true,
+                hasError: false,
+                error: null,
+                classObject: {
+                    active: true,
+                    'text-danger': false
+                },
+                activeClass: 'active',
+                errorClass: 'text-danger',
+                activeColor: 'red',
+                fontSize: 30,
+                styleObject: {
+                    color: 'red',
+                    fontSize: '13px'
+                },
+                isRed: false,
+                baseStyles: {
+                    color: 'white',
+                    background: 'red'
+                },
+                overridingStyles: {
+                    'text-decoration': 'underline'
+                }
+            },
+            computed: {
+                classObject1: function () {
+                    return {
+                        active: this.isActive && !this.error,
+                        'text-danger': this.error && this.error.type === 'fatal'
+                    }
+                }
+            }
+        })
+    </script>
+    <style>
+        .static {text-decoration: underline}
+        .active {font-weight: bold}
+        .text-danger {color: orange}
+        .foo {text-align: center}
+        .bar {font-size: 20px}
+        .baz {color: red}
+        .boo {text-decoration: underline}
+    </style>
+</body>
+</html>

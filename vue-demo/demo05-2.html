@@ -2,25 +2,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>vue-demo 模板语法-计算属性与侦听器</title>
+    <title>vue-demo 计算属性与侦听器</title>
     <script src="vue.js"></script>
 </head>
 <body>
     <div id="app">
         <!--
-        !!!
         watch更倾向于一个变量
+        -->
+        {{ fullName }}
+    </div>
+    <div id="app1">
+        <!--
         computed更倾向于依赖的一个或多个变量
         -->
+        {{ fullName }}
     </div>
     <script>
         var vm = new Vue({
             el: '#app',
             data: {
-                message: "Hello"
+                firstName: 'Foo',
+                lastName: 'Bar',
+                fullName: 'Foo Bar'
+            },
+            watch: {
+                firstName: function (val) {
+                    console.log("watch")
+                    this.fullName = val + ' ' + this.lastName
+                },
+                lastName: function (val) {
+                    this.fullName = this.firstName + ' ' + val
+                }
+            }
+        })
+        /*上面代码是命令式且重复的。将它与计算属性的版本进行比较：*/
+        var vm1 = new Vue({
+            el: '#app1',
+            data: {
+                firstName: 'Foo',
+                lastName: 'Bar'
             },
             computed: {
-
+                fullName: function () {
+                    console.log("computed")
+                    return this.firstName + ' ' + this.lastName
+                }
             }
         })
     </script>

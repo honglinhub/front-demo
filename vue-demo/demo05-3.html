@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-demo 计算属性的 setter</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="app1">
+        {{ fullName }}
+    </div>
+    <script>
+        var vm1 = new Vue({
+            el: '#app1',
+            data: {
+                firstName: 'Foo',
+                lastName: 'Bar'
+            },
+            computed: {
+                fullName: {
+                    // getter
+                    get: function () {
+                        return this.firstName + ' ' + this.lastName
+                    },
+                    // setter
+                    set: function (newValue) {
+                        var names = newValue.split(' ')
+                        this.firstName = names[0]
+                        this.lastName = names[names.length - 1]
+                    }
+                }
+            }
+        })
+        vm1.fullName = 'John Doe'
+        console.log(vm1.firstName)
+        console.log(vm1.lastName)
+    </script>
+</body>
+</html>
